@@ -27,12 +27,12 @@ endif
 EXPORTSCRIPT = scripts/fontexport.pe
 FONTTOOLSCRIPT = scripts/setisFixedPitch-fonttools.py
 SCRIPTS      = $(EXPORTSCRIPT) scripts/sfd2ttf.pe scripts/ttf2sfd.pe
-MISCFILES    = AUTHORS ChangeLog LICENSE README TODO
+MISCFILES    = AUTHORS ChangeLog LICENSE README.md TODO
 SRCDIR       = src
 EXPORTDIR    = export
 CHECK_PREFIX = check
 
-VER          = 2.00.3
+VER          = 2.1.2
 NAME         = LiberationMonoDz
 VARIANTS     = \
     -Regular       -Bold        -Italic       -BoldItalic
@@ -123,7 +123,12 @@ clean: clean-dist
 	rm -rf -- $(DISTPREFIX)* $(DISTPREFIX_TTF)*
 	rm -rf -- $(EXPORTDIR)
 	rm -f -- $(CHECK_PREFIX)_*
+	rm -f src/*.ttf 
 clean-dist:
 	rm -f -- *.tar.gz *.zip
+
+install:
+	mkdir -p $(DESTDIR)/usr/share/fonts/$(DISTPREFIX_TTF) || true
+	install $(DISTPREFIX_TTF)/* $(DESTDIR)/usr/share/fonts/$(DISTPREFIX_TTF)
 
 .PHONY: all build ttf-dir ttf dist dist-src dist-sfd dist-ttf 4web $(FORMATS) check clean clean-dist
